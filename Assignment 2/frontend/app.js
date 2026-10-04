@@ -120,7 +120,7 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
     }
   } catch (error) {
     document.getElementById('userFormMsg').textContent =
-      '✗ Error adding user';
+      'Error adding user';
     document.getElementById('userFormMsg').className =
       'form-message error';
   }
@@ -162,6 +162,41 @@ document.getElementById('borrowForm').addEventListener('submit', async (e) => {
   }
 });
 
+// Add book
+document.getElementById('addBookForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const bookTitle = document.getElementById('bookTitle').value;
+  const bookAuthor = document.getElementById('bookAuthor').value;
+
+  try {
+    const response = await fetch(`${API_URL}/api/books/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bookTitle, author: bookAuthor })
+    });
+
+    const result = await response.json();
+    const msg = document.getElementById('addBookFormMsg');
+
+    if (result.success) {
+      msg.textContent = `${result.message}`;
+      msg.className = 'form-message success';
+      document.getElementById('addBookForm').reset();
+      loadBooks();
+      loadAvailableBooks();
+    } else {
+      msg.textContent = `${result.message}`;
+      msg.className = 'form-message error';
+    }
+  } catch (error) {
+    document.getElementById('addBookFormMsg').textContent =
+      'Error adding book';
+    document.getElementById('addBookFormMsg').className =
+      'form-message error';
+  }
+});
+
 // Return book
 document.getElementById('returnForm').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -190,7 +225,7 @@ document.getElementById('returnForm').addEventListener('submit', async (e) => {
     }
   } catch (error) {
     document.getElementById('returnFormMsg').textContent =
-      '✗ Error returning book';
+      'Error returning book';
     document.getElementById('returnFormMsg').className =
       'form-message error';
   }

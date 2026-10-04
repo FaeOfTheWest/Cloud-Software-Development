@@ -137,40 +137,40 @@ def add_user():
         'timestamp': timestamp
     }), 201
 
-
-@app.route('/api/books', methods=['POST'])
-def add_book():
-    data = request.get_json()
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    if not data or not data.get('bookTitle') or not data.get('dueDate'):
-        return jsonify({
-            'success': False,
-            'message': 'All fields required',
-            'timestamp': timestamp
-        }), 400
+#deprecated add books
+# @app.route('/api/books', methods=['POST'])
+# def add_book():
+#     data = request.get_json()
+#     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+#     if not data or not data.get('bookTitle'):
+#         return jsonify({
+#             'success': False,
+#             'message': 'All fields required',
+#             'timestamp': timestamp
+#         }), 400
     
-    # Allow currentHolder to be optional (None if not provided)
-    current_holder = data.get('currentHolder')
+#     # Allow currentHolder to be optional (None if not provided)
+#     current_holder = data.get('currentHolder')
     
-    new_book = {
-        'id': max([b['id'] for b in borrowed_books]) + 1
-            if borrowed_books else 1,
-        'currentHolder': current_holder,
-        'bookTitle': data['bookTitle'],
-        'author': data.get('author', 'Unknown'),
-        'borrowDate': datetime.now().strftime('%Y-%m-%d') 
-            if current_holder else None,
-        'dueDate': data['dueDate'] if current_holder else None
-    }
+#     new_book = {
+#         'id': max([b['id'] for b in borrowed_books]) + 1
+#             if borrowed_books else 1,
+#         'currentHolder': current_holder,
+#         'bookTitle': data['bookTitle'],
+#         'author': data.get('author', 'Unknown'),
+#         'borrowDate': datetime.now().strftime('%Y-%m-%d') 
+#             if current_holder else None,
+#         'dueDate': data['dueDate'] if current_holder else None
+#     }
 
-    borrowed_books.append(new_book)
+#     borrowed_books.append(new_book)
 
-    return jsonify({
-        'success': True,
-        'data': new_book,
-        'message': 'Book added',
-        'timestamp': timestamp
-    }), 201
+#     return jsonify({
+#         'success': True,
+#         'data': new_book,
+#         'message': 'Book added',
+#         'timestamp': timestamp
+#     }), 201
 
 
 @app.route('/api/books/borrow', methods=['POST'])
@@ -232,6 +232,37 @@ def borrow_book():
         'timestamp': timestamp
     }), 201
 
+@app.route('/api/books/add', methods=['POST'])
+def add_book_to_library():
+    """Add a new book to the library"""
+    data = request.get_json()
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    if not data or not data.get('bookTitle') or not data.get('author'):
+        return jsonify({
+            'success': False,
+            'message': 'bookTitle and author required',
+            'timestamp': timestamp
+        }), 400
+    
+    new_book = {
+        'id': max([b['id'] for b in borrowed_books]) + 1 
+            if borrowed_books else 1,
+        'currentHolder': None,  # New books start as available
+        'bookTitle': data['bookTitle'],
+        'author': data['author'],
+        'borrowDate': None,
+        'dueDate': None
+    }
+    
+    borrowed_books.append(new_book)
+    
+    return jsonify({
+        'success': True,
+        'data': new_book,
+        'message': 'Book added to library',
+        'timestamp': timestamp
+    }), 201
 
 @app.route('/api/books/return', methods=['POST'])
 def return_book():
