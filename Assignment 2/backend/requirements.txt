@@ -1,0 +1,5 @@
+#You can definitely make fun of me for this, but I am used to running a requirements.txt file at work
+Flask==3.0.0
+Flask-CORS==4.0.0
+Flask-moment==1.0.6
+python-dotenv==1.0.0

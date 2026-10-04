@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Hughes Library Admin Panel</h1>
+      <p>Manage Books, Users, returning books, and loaning books!</p>
+    </header>
+
+    <main>
+      <!-- Active Users Section -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Active Users</h2>
+          <button id="reloadUsersBtn" class="btn-reload">Reload</button>
+        </div>
+        <div id="usersList" class="data-list">
+          <p class="loading">Loading users...</p>
+        </div>
+      </section>
+
+      <!-- Add User Form -->
+      <section class="panel">
+        <h2>Add New User</h2>
+        <form id="userForm" class="form">
+          <input type="text" id="userName" placeholder="Full Name" required>
+          <input type="email" id="userEmail" placeholder="Email" required>
+          <button type="submit" class="btn-submit">Add User</button>
+        </form>
+        <div id="userFormMsg" class="form-message"></div>
+      </section>
+
+      <!-- All Books Section -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>All Books</h2>
+          <button id="reloadBooksBtn" class="btn-reload">Reload</button>
+        </div>
+        <div id="booksList" class="data-list">
+          <p class="loading">Loading books...</p>
+        </div>
+      </section>
+
+      <!-- Borrow Book Form -->
+      <section class="panel">
+        <h2>Borrow a Book</h2>
+        <form id="borrowForm" class="form">
+          <input type="number" id="borrowBookId" placeholder="Book ID" required>
+          <input type="number" id="borrowUserId" placeholder="User ID" required>
+          <input type="date" id="borrowDueDate" required>
+          <button type="submit" class="btn-submit">Borrow Book</button>
+        </form>
+        <div id="borrowFormMsg" class="form-message"></div>
+      </section>
+
+      <!-- Return Book Form -->
+      <section class="panel">
+        <h2>Return a Book</h2>
+        <form id="returnForm" class="form">
+          <input type="number" id="returnBookId" placeholder="Book ID" required>
+          <button type="submit" class="btn-submit">Return Book</button>
+        </form>
+        <div id="returnFormMsg" class="form-message"></div>
+      </section>
+
+      <!-- User's Books Section -->
+      <section class="panel">
+        <h2>View User's Books</h2>
+        <div class="form">
+          <input type="number" id="userIdLookup" placeholder="Enter User ID">
+          <button id="lookupUserBtn" class="btn-submit">View Books</button>
+        </div>
+        <div id="userBooksResult" class="data-list"></div>
+      </section>
+
+      <!-- Available Books Section -->
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Available Books</h2>
+          <button id="reloadAvailableBtn" class="btn-reload">Reload</button>
+        </div>
+        <div id="availableBooksList" class="data-list">
+          <p class="loading">Loading available books...</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
