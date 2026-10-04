@@ -1,5 +1,4 @@
-const API_URL = 'https://libraryadminpage-fkf6h6hjhhh8hvc4.westus3-01.azurewebsites.net';
-
+const API_URL = "https://libraryadminpage-fkf6h6hjhhh8hvc4.westus3-01.azurewebsites.net";
 
 // Load all users
 async function loadUsers() {
